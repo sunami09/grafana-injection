@@ -129,3 +129,47 @@ run it:
 ![alt text](image-2.png)
 ![alt text](image-3.png)
 
+
+
+:::: Inorder to use iframes:  We need to enable anonymous access in Grafana so the iframes load without a login.
+
+
+edit:::
+nano /opt/homebrew/etc/grafana/grafana.ini
+
+[auth.anonymous]
+enabled = true
+org_role = Viewer
+
+for help to find it:: 
+(base) sunami@Sunamis-MacBook-Pro Graphana % grep -n "auth.anonymous" /opt/homebrew/etc/grafana/grafana.ini
+683:[auth.anonymous]
+
+nano +683 /opt/homebrew/etc/grafana/grafana.ini
+
+restart after that
+brew services restart grafana
+
+
+if it doesn't work :
+
+check this setting:
+
+ The panels are blocked because Grafana has X-Frame-Options: deny by default. We need to allow iframes in the Grafana config.
+
+
+grep -n "allow_embedding" /opt/homebrew/etc/grafana/grafana.ini
+
+if u see this:
+(base) sunami@Sunamis-MacBook-Pro Graphana % grep -n "allow_embedding" /opt/homebrew/etc/grafana/grafana.ini
+406:;allow_embedding = false
+(base) sunami@Sunamis-MacBook-Pro Graphana % 
+
+chnage to true:
+
+and restart again
+
+this is how iframes look:
+
+
+![alt text](image-4.png)
